@@ -1,8 +1,8 @@
-# Smart Home Simulator
+# Smart Home Dashboard
 
 ![Smart Home Dashboard](images/dashboard.png)
 
-A Python + Streamlit Smart Home Simulator that models indoor comfort, energy consumption, and device control. Users can simulate **24-hour AUTO vs MANUAL scenarios**, observe comfort scores, and optimize energy usage.
+A Python + Streamlit Smart Home Dashboard that models indoor comfort, energy consumption, and device control. Users can simulate **24-hour AUTO vs MANUAL scenarios**, observe comfort scores, and optimize energy usage.
 
 ---
 
@@ -19,7 +19,7 @@ A Python + Streamlit Smart Home Simulator that models indoor comfort, energy con
 
 ## Overview
 
-This simulator models a multi-room smart home:
+This Dashboard models a multi-room smart home:
 
 - Monitors **temperature, light, and presence** in rooms
 - Controls **lamp, AC, and curtains** automatically (or manually)
@@ -58,7 +58,7 @@ smart-home-dashboard/
 
 ## Science Behind It
 
-The simulator uses **basic physics and human comfort models**:
+The Dashboard    uses **basic physics and human comfort models**:
 
 1. **Temperature Dynamics**
    - AC adjusts room temperature toward target
