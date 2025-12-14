@@ -1,42 +1,39 @@
 from data.preferences import COMFORT
 
-
 class AutoController:
     def control_room(self, room, outdoor_temp, outdoor_light):
-        """
-        Automatically controls room actuators based on:
-        - indoor conditions
-        - outdoor conditions
-        - presence
-        - comfort preferences
-        """
 
-        # 1. No presence → energy saving
+        # --- 1. No presence → ECO ---
         if not room.presence:
             room.lamp.turn_off()
-            room.ac.set_eco()
             room.curtain.close()
+            room.ac.turn_on(COMFORT["eco_temp"])
             return
 
-        # 2. Lighting logic
+        # --- 2. LIGHTING (prefer daylight, then lamp) ---
         if room.light < COMFORT["light_min"]:
-            if outdoor_light > 60:
+            if outdoor_light > 50:
                 room.curtain.open()
                 room.lamp.turn_off()
             else:
                 room.curtain.close()
-                room.lamp.turn_on(70)
+                room.lamp.turn_on(50)
         else:
             room.lamp.turn_off()
 
-        # 3. Temperature logic
+        # --- 3. TEMPERATURE (energy-aware) ---
         if room.temperature > COMFORT["temp_max"]:
             if outdoor_temp < room.temperature:
-                room.curtain.open()
+                room.curtain.open()        # passive cooling
                 room.ac.turn_off()
             else:
-                room.ac.turn_on(target_temp=23)
+                room.curtain.close()
+                room.ac.turn_on(COMFORT["temp_max"])
 
         elif room.temperature < COMFORT["temp_min"]:
             room.curtain.close()
+            room.ac.turn_off()
+
+        else:
+            # Inside comfort band → avoid wasting energy
             room.ac.turn_off()
